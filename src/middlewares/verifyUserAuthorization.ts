@@ -11,7 +11,7 @@ function verifyUserAuthorization(role: string[]) {
       throw new AppError("Unauthorized", 401)
     }
 
-    return (next)
+    return next()
   }
 }
 
