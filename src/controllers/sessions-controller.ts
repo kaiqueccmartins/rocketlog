@@ -4,7 +4,7 @@ import { z } from "zod"
 import { compare } from "bcrypt"
 import { AppError } from "@/utils/AppError"
 import { authConfig } from "@/configs/auth"
-import { sign } from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 
 class SessionsController {
   async create(request: Request, response: Response) {
@@ -31,8 +31,8 @@ class SessionsController {
 
     const { secret, expiresIn } = authConfig.jwt
 
-    const token = sign({ role: user.role ?? "customer" }, secret, {
-      subject: user.id,
+    const token = jwt.sign({ role: user.role ?? "customer" }, secret as string, {
+      subject: String(user.id),
       expiresIn,
     })
 
